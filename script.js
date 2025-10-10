@@ -1,3 +1,24 @@
+// Passwortabfrage
+const CORRECT_PASSWORD = 'landrover'; // Ändere das Passwort hier
+const passwordForm = document.getElementById('passwordForm');
+const passwordInput = document.getElementById('passwordInput');
+const errorMessage = document.getElementById('errorMessage');
+const mainContent = document.getElementById('mainContent');
+
+passwordForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (passwordInput.value === CORRECT_PASSWORD) {
+        document.getElementById('passwordPrompt').style.display = 'none';
+        mainContent.style.display = 'block';
+        // Initialisiere die App
+        updateFahrerSelect();
+        renderFahrer();
+        renderTabelle();
+    } else {
+        errorMessage.style.display = 'block';
+        passwordInput.value = '';
+    }
+});
 // Daten-Keys für LocalStorage
 const FAHRER_KEY = 'fahrerListe';
 const FAHRTEN_KEY = 'fahrtenListe';

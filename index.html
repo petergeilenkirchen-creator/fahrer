@@ -7,86 +7,110 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🚖 Fahrdienst-Manager (Online)</h1>
-        
-        <!-- Fahrten-Liste (oben) -->
-        <section class="section">
-            <h2>Fahrten-Liste</h2>
-            <div id="loading">Lade Daten…</div>
-            <div id="tabelleContainer" style="display:none;">
-                <div class="button-group">
-                    <button id="exportBtn" class="btn-primary">📊 CSV Export</button>
-                    <button id="importBtn" class="btn-secondary">📥 CSV Import</button>
-                    <button id="resetFormBtn" class="btn-secondary" onclick="resetFahrtForm()">🔄 Reset Form</button>
-                </div>
-                <table id="fahrtenTabelle">
-                    <thead>
-                        <tr>
-                            <th>Datum</th><th>Zeit</th><th>An/Ab</th><th>Ort</th><th>FlugNr.</th>
-                            <th>#Pers</th><th>Fahrer</th><th>Gast</th><th>Handy</th><th>Bemerkung</th><th>Aktionen</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+    <!-- Passwortabfrage -->
+    <div id="passwordPrompt" class="password-container">
+        <h2>🔒 Zugriff geschützt</h2>
+        <form id="passwordForm">
+            <input type="password" id="passwordInput" placeholder="Passwort eingeben" required>
+            <div class="button-group">
+                <button type="submit" class="btn-primary">➡️ Anmelden</button>
             </div>
-        </section>
+        </form>
+        <p id="errorMessage" style="color: red; display: none;">Falsches Passwort!</p>
+    </div>
 
-        <!-- Fahrt-Management (mittig) -->
-        <section class="section">
-            <h2>Fahrt hinzufügen</h2>
-            <form id="fahrtForm">
-                <div class="form-row">
-                    <input type="date" id="datum" required>
-                    <input type="time" id="zeit" required>
-                    <select id="anAb"><option>An</option><option>Ab</option></select>
+    <!-- Hauptinhalt (ausgeblendet bis Passwort korrekt) -->
+    <div id="mainContent" style="display: none;">
+        <div class="container">
+            <h1>🚖 Fahrdienst-Manager (Online)</h1>
+            
+            <!-- Fahrten-Liste (oben) -->
+            <section class="section">
+                <h2>Fahrten-Liste</h2>
+                <div id="loading">Lade Daten…</div>
+                <div id="tabelleContainer" style="display:none;">
+                    <div class="button-group">
+                        <button id="exportBtn" class="btn-primary">📊 CSV Export</button>
+                        <button id="importBtn" class="btn-secondary">📥 CSV Import</button>
+                        <button id="resetFormBtn" class="btn-secondary" onclick="resetFahrtForm()">🔄 Reset Form</button>
+                    </div>
+                    <table id="fahrtenTabelle">
+                        <thead>
+                            <tr>
+                                <th>Datum</th><th>Zeit</th><th>An/Ab</th><th>Ort</th><th>FlugNr.</th>
+                                <th>#Pers</th><th>Fahrer</th><th>Gast</th><th>Handy</th><th>Bemerkung</th><th>Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
-                <div class="form-row">
-                    <input type="text" id="ort" placeholder="Ort" required>
-                    <input type="text" id="flugNr" placeholder="FlugNr.">
-                    <input type="number" id="pers" placeholder="#Pers" min="1" required>
-                </div>
-                <div class="form-row">
-                    <select id="fahrerSelect" required><option value="">Fahrer wählen</option></select>
-                    <input type="text" id="gast" placeholder="Gast" required>
-                    <input type="tel" id="handy" placeholder="Handy" required>
-                </div>
-                <textarea id="bemerkung" placeholder="Bemerkung"></textarea>
-                
-                <!-- Zusammengefasste Buttons -->
-                <div class="button-group">
-                    <button type="submit" class="btn-primary">➕ Fahrt speichern</button>
-                    <button type="button" class="btn-secondary" onclick="resetFahrtForm()">🔄 Zurücksetzen</button>
-                    <button type="button" class="btn-secondary" onclick="updateFahrerSelect()">🔄 Fahrer aktualisieren</button>
-                </div>
-            </form>
-        </section>
+            </section>
 
-        <!-- Fahrer-Management (unten) -->
-        <section class="section">
-            <h2>Fahrer anlegen</h2>
-            <form id="fahrerForm">
-                <div class="form-row">
-                    <input type="text" id="fahrerName" placeholder="Fahrer Name" required>
-                    <input type="tel" id="fahrerHandy" placeholder="Handy" required>
-                </div>
-                
-                <!-- Zusammengefasste Buttons -->
-                <div class="button-group">
-                    <button type="submit" class="btn-primary">👤 Fahrer hinzufügen</button>
-                    <button type="button" class="btn-secondary" onclick="resetFahrerForm()">🔄 Zurücksetzen</button>
-                    <button type="button" class="btn-success" onclick="renderFahrer(); updateFahrerSelect()">📋 Liste aktualisieren</button>
-                </div>
-            </form>
-            <div id="fahrerListe"></div>
-        </section>
+            <!-- Fahrt-Management (mittig) -->
+            <section class="section">
+                <h2>Fahrt hinzufügen</h2>
+                <form id="fahrtForm">
+                    <div class="form-row">
+                        <input type="date" id="datum" required>
+                        <input type="time" id="zeit" required>
+                        <select id="anAb"><option>An</option><option>Ab</option></select>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" id="ort" placeholder="Ort" required>
+                        <input type="text" id="flugNr" placeholder="FlugNr.">
+                        <input type="number" id="pers" placeholder="#Pers" min="1" required>
+                    </div>
+                    <div class="form-row">
+                        <select id="fahrerSelect" required><option value="">Fahrer wählen</option></select>
+                        <input type="text" id="gast" placeholder="Gast" required>
+                        <input type="tel" id="handy" placeholder="Handy" required>
+                    </div>
+                    <textarea id="bemerkung" placeholder="Bemerkung"></textarea>
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">➕ Fahrt speichern</button>
+                        <button type="button" class="btn-secondary" onclick="resetFahrtForm()">🔄 Zurücksetzen</button>
+                        <button type="button" class="btn-secondary" onclick="updateFahrerSelect()">🔄 Fahrer aktualisieren</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Fahrer-Management (unten) -->
+            <section class="section">
+                <h2>Fahrer anlegen</h2>
+                <form id="fahrerForm">
+                    <div class="form-row">
+                        <input type="text" id="fahrerName" placeholder="Fahrer Name" required>
+                        <input type="tel" id="fahrerHandy" placeholder="Handy" required>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">👤 Fahrer hinzufügen</button>
+                        <button type="button" class="btn-secondary" onclick="resetFahrerForm()">🔄 Zurücksetzen</button>
+                        <button type="button" class="btn-success" onclick="renderFahrer(); updateFahrerSelect()">📋 Liste aktualisieren</button>
+                    </div>
+                </form>
+                <div id="fahrerListe"></div>
+            </section>
+        </div>
     </div>
 
     <input type="file" id="importFile" style="display:none;" accept=".csv">
     <script src="script.js"></script>
     
-    <!-- Zusätzliche CSS für schöne Buttons (inline für Einfachheit) -->
+    <!-- Inline CSS für Passwortabfrage -->
     <style>
+        .password-container { 
+            max-width: 400px; 
+            margin: 50px auto; 
+            padding: 20px; 
+            background: white; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            text-align: center; 
+        }
+        .password-container input { 
+            width: 80%; 
+            margin: 10px 0; 
+        }
         .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
         .button-group { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
         .btn-primary { background: #007bff; border: none; }
