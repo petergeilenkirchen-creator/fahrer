@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahrdienst-Manager (Online)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🚖 Fahrdienst-Manager (Online)</h1>
+        
+        <!-- Fahrer-Management -->
+        <section class="section">
+            <h2>Fahrer anlegen</h2>
+            <form id="fahrerForm">
+                <input type="text" id="fahrerName" placeholder="Fahrer Name" required>
+                <input type="tel" id="fahrerHandy" placeholder="Handy" required>
+                <button type="submit">Fahrer hinzufügen</button>
+            </form>
+            <div id="fahrerListe"></div>
+        </section>
+
+        <!-- Fahrt-Management -->
+        <section class="section">
+            <h2>Fahrt hinzufügen</h2>
+            <form id="fahrtForm">
+                <input type="date" id="datum" required>
+                <input type="time" id="zeit" required>
+                <select id="anAb"><option>An</option><option>Ab</option></select>
+                <input type="text" id="ort" placeholder="Ort" required>
+                <input type="text" id="flugNr" placeholder="FlugNr.">
+                <input type="number" id="pers" placeholder="#Pers" min="1" required>
+                <select id="fahrerSelect" required><option value="">Fahrer wählen</option></select>
+                <input type="text" id="gast" placeholder="Gast" required>
+                <input type="tel" id="handy" placeholder="Handy" required>
+                <textarea id="bemerkung" placeholder="Bemerkung"></textarea>
+                <button type="submit">Fahrt hinzufügen</button>
+            </form>
+        </section>
+
+        <!-- Tabelle -->
+        <section class="section">
+            <h2>Fahrten-Liste</h2>
+            <div id="loading">Lade Daten…</div>
+            <div id="tabelleContainer" style="display:none;">
+                <button id="exportBtn">CSV Export</button>
+                <button id="importBtn">CSV Import</button>
+                <table id="fahrtenTabelle">
+                    <thead>
+                        <tr>
+                            <th>Datum</th><th>Zeit</th><th>An/Ab</th><th>Ort</th><th>FlugNr.</th>
+                            <th>#Pers</th><th>Fahrer</th><th>Gast</th><th>Handy</th><th>Bemerkung</th><th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <input type="file" id="importFile" style="display:none;" accept=".csv">
+    <script src="script.js"></script>
+</body>
+</html>
