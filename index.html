@@ -11,6 +11,7 @@
     <div id="passwordPrompt" class="password-container">
         <h2>🔒 Zugriff geschützt</h2>
         <form id="passwordForm">
+            <label for="passwordInput">Passwort</label>
             <input type="password" id="passwordInput" placeholder="Passwort eingeben" required>
             <div class="button-group">
                 <button type="submit" class="btn-primary">➡️ Anmelden</button>
@@ -34,15 +35,17 @@
                         <button id="importBtn" class="btn-secondary">📥 CSV Import</button>
                         <button id="resetFormBtn" class="btn-secondary" onclick="resetFahrtForm()">🔄 Reset Form</button>
                     </div>
-                    <table id="fahrtenTabelle">
-                        <thead>
-                            <tr>
-                                <th>Datum</th><th>Zeit</th><th>An/Ab</th><th>Ort</th><th>FlugNr.</th>
-                                <th>#Pers</th><th>Fahrer</th><th>Gast</th><th>Handy</th><th>Bemerkung</th><th>Aktionen</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                    <div class="table-wrapper">
+                        <table id="fahrtenTabelle">
+                            <thead>
+                                <tr>
+                                    <th>Datum</th><th>Zeit</th><th>An/Ab</th><th>Ort</th><th>FlugNr.</th>
+                                    <th>#Pers</th><th>Fahrer</th><th>Gast</th><th>Handy</th><th>Bemerkung</th><th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -51,21 +54,51 @@
                 <h2>Fahrt hinzufügen</h2>
                 <form id="fahrtForm">
                     <div class="form-row">
-                        <input type="date" id="datum" required>
-                        <input type="time" id="zeit" required>
-                        <select id="anAb"><option>An</option><option>Ab</option></select>
+                        <div class="form-group">
+                            <label for="datum">Datum</label>
+                            <input type="date" id="datum" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="zeit">Zeit</label>
+                            <input type="time" id="zeit" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="anAb">An/Ab</label>
+                            <select id="anAb"><option>An</option><option>Ab</option></select>
+                        </div>
                     </div>
                     <div class="form-row">
-                        <input type="text" id="ort" placeholder="Ort" required>
-                        <input type="text" id="flugNr" placeholder="FlugNr.">
-                        <input type="number" id="pers" placeholder="#Pers" min="1" required>
+                        <div class="form-group">
+                            <label for="ort">Ort</label>
+                            <input type="text" id="ort" placeholder="Ort" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="flugNr">FlugNr.</label>
+                            <input type="text" id="flugNr" placeholder="FlugNr.">
+                        </div>
+                        <div class="form-group">
+                            <label for="pers">#Pers</label>
+                            <input type="number" id="pers" placeholder="#Pers" min="1" required>
+                        </div>
                     </div>
                     <div class="form-row">
-                        <select id="fahrerSelect" required><option value="">Fahrer wählen</option></select>
-                        <input type="text" id="gast" placeholder="Gast" required>
-                        <input type="tel" id="handy" placeholder="Handy" required>
+                        <div class="form-group">
+                            <label for="fahrerSelect">Fahrer</label>
+                            <select id="fahrerSelect" required><option value="">Fahrer wählen</option></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gast">Gast</label>
+                            <input type="text" id="gast" placeholder="Gast" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="handy">Handy</label>
+                            <input type="tel" id="handy" placeholder="Handy" required>
+                        </div>
                     </div>
-                    <textarea id="bemerkung" placeholder="Bemerkung"></textarea>
+                    <div class="form-group">
+                        <label for="bemerkung">Bemerkung</label>
+                        <textarea id="bemerkung" placeholder="Bemerkung"></textarea>
+                    </div>
                     <div class="button-group">
                         <button type="submit" class="btn-primary">➕ Fahrt speichern</button>
                         <button type="button" class="btn-secondary" onclick="resetFahrtForm()">🔄 Zurücksetzen</button>
@@ -79,8 +112,14 @@
                 <h2>Fahrer anlegen</h2>
                 <form id="fahrerForm">
                     <div class="form-row">
-                        <input type="text" id="fahrerName" placeholder="Fahrer Name" required>
-                        <input type="tel" id="fahrerHandy" placeholder="Handy" required>
+                        <div class="form-group">
+                            <label for="fahrerName">Fahrer Name</label>
+                            <input type="text" id="fahrerName" placeholder="Fahrer Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fahrerHandy">Handy</label>
+                            <input type="tel" id="fahrerHandy" placeholder="Handy" required>
+                        </div>
                     </div>
                     <div class="button-group">
                         <button type="submit" class="btn-primary">👤 Fahrer hinzufügen</button>
@@ -96,31 +135,84 @@
     <input type="file" id="importFile" style="display:none;" accept=".csv">
     <script src="script.js"></script>
     
-    <!-- Inline CSS für Passwortabfrage -->
+    <!-- Inline CSS für mobile Optimierung -->
     <style>
         .password-container { 
-            max-width: 400px; 
-            margin: 50px auto; 
-            padding: 20px; 
+            max-width: 90%; 
+            margin: 20px auto; 
+            padding: 15px; 
             background: white; 
             border-radius: 8px; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
             text-align: center; 
         }
         .password-container input { 
-            width: 80%; 
+            width: 100%; 
             margin: 10px 0; 
+            font-size: 16px; 
+            padding: 12px; 
         }
+        .container { max-width: 100%; padding: 10px; }
+        .section { margin: 10px 0; padding: 15px; }
+        h1, h2 { position: sticky; top: 0; background: white; z-index: 1; padding: 10px 0; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-        .button-group { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-        .btn-primary { background: #007bff; border: none; }
-        .btn-secondary { background: #6c757d; border: none; }
-        .btn-success { background: #28a745; border: none; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 14px; margin-bottom: 5px; }
+        input, select, textarea { 
+            font-size: 16px; 
+            padding: 12px; 
+            border-radius: 6px; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+        textarea { min-height: 80px; }
+        .button-group { 
+            display: flex; 
+            gap: 10px; 
+            margin-top: 15px; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+        }
+        .btn-primary, .btn-secondary, .btn-success { 
+            padding: 12px 20px; 
+            font-size: 16px; 
+            min-width: 100px; 
+            border-radius: 6px; 
+            border: none; 
+            cursor: pointer; 
+        }
+        .btn-primary { background: #007bff; }
+        .btn-secondary { background: #6c757d; }
+        .btn-success { background: #28a745; }
         .btn-primary:hover, .btn-success:hover { opacity: 0.9; }
         .btn-secondary:hover { background: #5a6268; }
-        @media (max-width: 768px) { 
+        .table-wrapper { 
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch; 
+        }
+        table { 
+            width: 100%; 
+            min-width: 600px; 
+            font-size: 14px; 
+        }
+        th, td { padding: 10px; }
+        th { 
+            position: sticky; 
+            top: 0; 
+            background: #f8f9fa; 
+            z-index: 1; 
+        }
+        td button { 
+            padding: 8px 12px; 
+            font-size: 14px; 
+            border-radius: 6px; 
+        }
+        @media (max-width: 768px) {
             .form-row { grid-template-columns: 1fr; }
-            .button-group { flex-direction: column; }
+            .button-group { flex-direction: column; align-items: stretch; }
+            .btn-primary, .btn-secondary, .btn-success { width: 100%; }
+            h2 { font-size: 18px; }
+            table { font-size: 12px; }
         }
     </style>
 </body>
